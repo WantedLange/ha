@@ -277,10 +277,13 @@ HA's skærmbilleder, hver nat på GitHub, og man kan altid se og fortryde dem."*
 spring over.
 
 1. **Klik G** (GitHub-konto og login). Tjek med `gh auth status`.
-2. Repo og nøgle (HA's nøgle kan kun skrive til dette ene repo):
+2. Repo og nøgle (HA's nøgle kan kun skrive til dette ene repo). 🚨 Repoet skal være **privat**:
+   `/config` indeholder adresser, passwords og hvornår folk er hjemme. Står der ikke `PRIVATE`,
+   så stop og sig det til brugeren.
    ```bash
    source ~/.profile
    gh repo create ha-config --private
+   gh repo view ha-config --json visibility --jq .visibility   # skal give PRIVATE
    ha_ssh 'mkdir -p /config/.ssh /config/scripts &&
      ssh-keygen -t ed25519 -f /config/.ssh/github -N "" -C ha-git-sync &&
      ssh-keyscan github.com > /config/.ssh/known_hosts'
@@ -473,6 +476,9 @@ Uden den nøgle kan en krypteret backup **ikke** gendannes. Heller ikke af Googl
 3. I en terminal (**Antigravity:** menuen **Terminal → New Terminal**): skriv `gh auth login`, og tryk Enter
 4. Vælg med piletasterne og Enter: **GitHub.com** → **HTTPS** → **Yes** → **Login with a web browser**
 5. Kopiér den kode, den viser → Enter → indsæt koden i browseren → **Authorize**. Skriv "færdig" til AI'en.
+
+> 🚨 Repoet `ha-config`, som AI'en opretter, er **privat**: kun du kan se det. Skift det aldrig til
+> **Public**. Det indeholder din HA-opsætning med adresser, passwords og hvornår I er hjemme.
 
 ## Klik H: Indsæt en automation
 
