@@ -30,10 +30,10 @@ Du skal aldrig selv skrive kommandoer. AI'en skriver dem, og du klikker og kopie
 
 Begge virker. Vælg den, du har lyst til.
 
-| | **Google Antigravity** | **Claude Code** |
+| | **Google Antigravity** | **Claude (appen)** |
 |---|---|---|
-| Ser ud som | Et program med vinduer og knapper | Et tekstvindue (terminal) |
-| Login | Din Google-konto (gratis at starte) | Kræver Claude Pro-abonnement |
+| Ser ud som | Et program med vinduer og knapper | Et program med en chat (fanen **Code**) |
+| Login | Din Google-konto (gratis at starte) | Kræver Claude Pro eller højere (gratis-kontoen kan ikke bruge **Code**) |
 | Anbefalet hvis | Du bruger Google til alt | Du allerede betaler for Claude |
 
 ## 2. Installér git
@@ -54,16 +54,11 @@ Git er et lille program, der husker alle ændringer, så AI'en kan fortryde sine
    ethvert andet program
 2. Åbn den, og log ind med din Google-konto
 
-### Hvis du valgte Claude Code
+### Hvis du valgte Claude
 
-1. Åbn en terminal:
-   - **Mac:** `Cmd + Mellemrum` → skriv `Terminal` → Enter
-   - **Windows:** Start-menuen → skriv `PowerShell` → Enter
-   - **Linux:** `Ctrl + Alt + T`
-2. Kopiér linjen til din computer ind i terminalen, og tryk Enter:
-   - **Mac/Linux:** `curl -fsSL https://claude.ai/install.sh | bash`
-   - **Windows:** `irm https://claude.ai/install.ps1 | iex`
-3. Luk terminalen, og åbn en ny
+1. Hent Claude-appen på [claude.ai/download](https://claude.ai/download) (Mac og Windows; Linux
+   er beta), og installér som ethvert andet program
+2. Åbn den, og log ind med din Claude-konto
 
 ## 4. Lav en mappe, og læg `GUIDE.md` i den
 
@@ -74,8 +69,9 @@ Git er et lille program, der husker alle ændringer, så AI'en kan fortryde sine
 ## 5. Start AI'en i mappen
 
 - **Antigravity:** **File → Open Folder** → vælg `ha-config`. Åbn chatten/agent-panelet.
-- **Claude Code:** Åbn en terminal, skriv `cd ~/ha-config`, tryk Enter, skriv `claude`, tryk Enter.
-  Første gang skal du logge ind.
+- **Claude:** Åbn appen → fanen **Code** → under beskedfeltet: vælg **Local** → tryk på
+  mappe-knappen ved siden af → **Open folder…** → vælg `ha-config`.
+  Claude spørger om lov, før den kører en kommando. Læs, hvad den vil, og tryk **Tillad**.
 
 ## 6. Kopiér denne besked ind til AI'en
 
@@ -241,19 +237,22 @@ ha_ssh "ha core logs | tail -50"                  # se efter ERROR
 7. Spørg, før du genstarter HA eller sletter noget.
 ````
 
-Bruges **Claude Code**, så opret også `CLAUDE.md` med den ene linje `@AGENTS.md`.
+Bruges **Claude**, så opret også `CLAUDE.md` med den ene linje `@AGENTS.md`.
 Antigravity læser selv `AGENTS.md`. Commit begge.
 
 ## 2.6 Forbind MCP (AI'en styrer huset direkte)
 
 Bed først brugeren om **Klik D** (MCP i HA). Derefter:
 
-- **Claude Code:**
-  ```bash
-  source ~/.profile
-  claude mcp add --scope user --transport http homeassistant "$HA_URL/api/mcp" \
-    --header "Authorization: Bearer $HA_TOKEN"
+- **Claude (appen):** Tilføj serveren under `mcpServers` i `~/.claude.json` (bevar alt andet i
+  filen). Skriv den med et lille script, der læser `HA_TOKEN` fra miljøet:
+  ```json
+  { "mcpServers": { "homeassistant": { "type": "http",
+      "url": "http://homeassistant.local:8123/api/mcp",
+      "headers": { "Authorization": "Bearer <HA_TOKEN>" } } } }
   ```
+  Bed brugeren om at lukke appen **helt** (Mac: `Cmd + Q`; Windows: højreklik på ikonet ved uret →
+  Quit) og åbne den igen. Dukker MCP ikke op bagefter, så spring den over: REST og SSH kan det samme.
 - **Antigravity:** Tilføj serveren i `~/.gemini/config/mcp_config.json` (bevar eksisterende servere).
   Skriv filen med et lille script, der læser `HA_TOKEN` fra miljøet, så tokenet aldrig står i chatten:
   ```json
@@ -473,7 +472,7 @@ Uden den nøgle kan en krypteret backup **ikke** gendannes. Heller ikke af Googl
 1. Opret en gratis konto på [github.com/signup](https://github.com/signup)
 2. AI'en installerer GitHub-programmet `gh`. Kan den ikke (den mangler dit password), så kør den
    linje, den giver dig, i en terminal.
-3. I en terminal (**Antigravity:** menuen **Terminal → New Terminal**): skriv `gh auth login`, og tryk Enter
+3. I en terminal (**Antigravity:** menuen **Terminal → New Terminal**; **Claude:** åbn programmet **Terminal** på Mac eller **Git Bash** på Windows): skriv `gh auth login`, og tryk Enter
 4. Vælg med piletasterne og Enter: **GitHub.com** → **HTTPS** → **Yes** → **Login with a web browser**
 5. Kopiér den kode, den viser → Enter → indsæt koden i browseren → **Authorize**. Skriv "færdig" til AI'en.
 

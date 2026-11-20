@@ -1,6 +1,6 @@
 # Din egen AI-hjælper til Home Assistant — gratis
 
-En AI (Claude Code eller Google Antigravity) på din egen computer, med fuld adgang til din Home
+En AI (Claude-appen eller Google Antigravity) på din egen computer, med fuld adgang til din Home
 Assistant: SSH, token og MCP. Plus daglig backup til Google Drive og (valgfrit) automatisk git-sync
 til GitHub.
 
