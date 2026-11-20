@@ -252,7 +252,8 @@ Bed først brugeren om **Klik D** (MCP i HA). Derefter:
       "headers": { "Authorization": "Bearer <HA_TOKEN>" } } } }
   ```
   Bed brugeren om at lukke appen **helt** (Mac: `Cmd + Q`; Windows: højreklik på ikonet ved uret →
-  Quit) og åbne den igen. Dukker MCP ikke op bagefter, så spring den over: REST og SSH kan det samme.
+  Quit) og åbne den igen. Test: skriv `/mcp` i beskedfeltet, og se, om **homeassistant** står
+  på listen. Gør den ikke, så spring MCP over: REST og SSH kan det samme.
 - **Antigravity:** Tilføj serveren i `~/.gemini/config/mcp_config.json` (bevar eksisterende servere).
   Skriv filen med et lille script, der læser `HA_TOKEN` fra miljøet, så tokenet aldrig står i chatten:
   ```json
